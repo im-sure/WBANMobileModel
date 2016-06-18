@@ -4,8 +4,8 @@ public class RandomMobileModel extends MobileModel {
 
 	@Override
 	public Location model(Location location) {
-		long x = location.getLocationX();
-		long y = location.getLocationY();
+		int x = location.getLocationX();
+		int y = location.getLocationY();
 		int n = new Random().nextInt(9);
 		switch (n) {
 			case 0: break;

@@ -1,31 +1,42 @@
 
 public class Location {
-	private long mX;
-	private long mY;
 	
-	public Location(long x, long y) {
+	private int mX;
+	private int mY;
+	
+	public Location(Location location) {
+		mX = location.getLocationX();
+		mY = location.getLocationY();
+	}
+	
+	public Location(int x, int y) {
 		mX = x;
 		mY = y;
 	}
 	
-	public void setLocation(long x, long y) {
-		setLocationX(x);
-		setLocationY(y);
+	public void setLocation(Location location) {
+		mX = location.getLocationX();
+		mY = location.getLocationY();
 	}
 	
-	public void setLocationX(long x) {
+	public void setLocation(int x, int y) {
 		mX = x;
-	}
-	
-	public void setLocationY(long y) {
 		mY = y;
 	}
 	
-	public long getLocationX() {
+	public void setLocationX(int x) {
+		mX = x;
+	}
+	
+	public void setLocationY(int y) {
+		mY = y;
+	}
+	
+	public int getLocationX() {
 		return mX;
 	}
 	
-	public long getLocationY() {
+	public int getLocationY() {
 		return mY;
 	}
 	

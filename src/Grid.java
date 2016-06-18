@@ -1,12 +1,13 @@
 
 public class Grid {
-	private long mRows;
-	private long mColumns;
+	
+	private int mRows;
+	private int mColumns;
 	private Location[] mOccupations;
 	private Location[] mDestinations;
 	private Location[] mLocations;
 
-	public Grid(long rows, long columns, Location[] occupations, Location[] destinations) {
+	public Grid(int rows, int columns, Location[] occupations, Location[] destinations) {
 		mRows = rows;
 		mColumns = columns;
 		mOccupations = occupations;
@@ -14,16 +15,16 @@ public class Grid {
 		mLocations = null;
 	}
 	
-	public void setRowsAndColumns(long rows, long columns) {
+	public void setRowsAndColumns(int rows, int columns) {
 		mRows = rows;
 		mColumns = columns;
 	}
 	
-	public long getRows() {
+	public int getRows() {
 		return mRows;
 	}
 	
-	public long getColumns() {
+	public int getColumns() {
 		return mColumns;
 	}
 	
@@ -63,8 +64,8 @@ public class Grid {
 	}
 	
 	public boolean isBeyondBoundary(Location location) {
-		long x = location.getLocationX();
-		long y = location.getLocationY();
+		int x = location.getLocationX();
+		int y = location.getLocationY();
 		if (x >= 0 && x < mRows && y >= 0 && y < mColumns) {
 			return true;
 		}
