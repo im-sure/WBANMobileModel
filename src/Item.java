@@ -8,7 +8,7 @@ public class Item {
 	
 	public Item(Location location, int stepLength, MobileModel mobileModel) {
 		mLocation = location;
-		mLastLocation = location;
+		mLastLocation = new Location(mLocation);
 		mStepLength = stepLength;
 		mMobileModel = mobileModel;
 	}
@@ -34,13 +34,13 @@ public class Item {
 	}
 	
 	public void step() {
-		mLastLocation = mLocation;
+		mLastLocation.setLocation(mLocation);;
 		for (int i = 0; i < mStepLength; i++) {
 			mLocation = mMobileModel.model(mLocation);
 		}
 	}
 	
 	public void back() {
-		mLocation = mLastLocation;
+		mLocation.setLocation(mLastLocation);
 	}
 }

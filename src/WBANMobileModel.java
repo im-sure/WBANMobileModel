@@ -1,51 +1,63 @@
-import java.util.Arrays;
 import java.util.Random;
 
 public class WBANMobileModel {
 	
-	public static final int GRID_ROWS = 10000;
-	public static final int GRID_COLUMNS = 10000;
+	public static final int GRID_ROWS = 100;
+	public static final int GRID_COLUMNS = 100;
 	public static final int ITEM_NUMBERS = 100;
 	public static final int STEP_LENGTH = 1;
-	public static final int SIMULATION_NUMBERS = 100000;
+	public static final int STEP_NUMBERS = 10000;
+	public static final int SIMULATION_NUMBERS = 1000;
 	
 	private Grid mGrid;
 	private Location[] mOccupations;
 	private Location[] mDestinations;
 	private Item[] mItems;
 	private Location[] mLocations;
-	private int mScores;
+	private int mScore;
+	private int mCenterX;
+	private int mCenterY;
 
 	public static void main(String[] args) {
 		WBANMobileModel wbanMobileModel = new WBANMobileModel();
 		wbanMobileModel.init();
-		for (int i = 0; i < SIMULATION_NUMBERS; i++) {
-			wbanMobileModel.step();
+		int temp = 0;
+		for (int j = 0; j < SIMULATION_NUMBERS; j++) {
+			wbanMobileModel.init();
+			for (int i = 0; i < STEP_NUMBERS; i++) {
+				wbanMobileModel.step();
+			}
+			temp += wbanMobileModel.mScore;
+			System.out.println("Number " + j + ": socre is " + wbanMobileModel.mScore);
 		}
-		System.out.println("Score is " + wbanMobileModel.mScores
+		temp /= SIMULATION_NUMBERS;
+		wbanMobileModel.mScore = temp;
+		System.out.println("Score is " + wbanMobileModel.mScore
 				+ ", probability is " + wbanMobileModel.calculateProbability());
 	}
 	
 	private void init() {
+		mCenterX = GRID_ROWS / 2;
+		mCenterY = GRID_COLUMNS / 2;
 		initOccupations();
 		initDestinations();
 		initItems();
 		mGrid = new Grid(GRID_ROWS, GRID_COLUMNS, mOccupations, mDestinations);
 		mGrid.setLocations(mLocations);
-		mScores = 0;
+		mScore = 0;
 	}
 
 	private void initOccupations() {
 		mOccupations = new Location[2];
-		mOccupations[0] = new Location(4998, 5000);
-		mOccupations[1] = new Location(5002, 5000);
+		mOccupations[0] = new Location(mCenterX - 2, mCenterY);
+		mOccupations[1] = new Location(mCenterX + 2, mCenterY);
 	}
 	
 	private void initDestinations() {
 		mDestinations = new Location[3];
-		mDestinations[0] = new Location(4999, 5000);
-		mDestinations[1] = new Location(5000, 5000);
-		mDestinations[2] = new Location(5001, 5000);
+		mDestinations[0] = new Location(mCenterX - 1, mCenterY);
+		mDestinations[1] = new Location(mCenterX, mCenterY);
+		mDestinations[2] = new Location(mCenterX + 1, mCenterY);
 	}
 	
 	private void initItems() {
@@ -61,7 +73,7 @@ public class WBANMobileModel {
 				int y = new Random().nextInt(GRID_COLUMNS);
 				mLocations[i].setLocation(x, y);
 				mItems[i].setLocation(mLocations[i]);
-			} while (isOverlay(i));
+			} while (isOverlay(i) || isAtOccupations(i));
 		}
 	}
 	
@@ -75,7 +87,7 @@ public class WBANMobileModel {
 		}
 		mGrid.setLocations(mLocations);
 		if (mGrid.isAtDestinations()) {
-			mScores++;
+			mScore++;
 		}
 	}
 	
@@ -89,8 +101,18 @@ public class WBANMobileModel {
 		return false;
 	}
 	
+	private boolean isAtOccupations(int n) {
+		for (Location occupation: mOccupations) {
+			if (mLocations[n].getLocationX() == occupation.getLocationX()
+					&& mLocations[n].getLocationY() == occupation.getLocationY()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private float calculateProbability() {
-		float probability = (float) mScores / SIMULATION_NUMBERS;
+		float probability = (float) mScore / STEP_NUMBERS;
 		return probability;
 	}
 

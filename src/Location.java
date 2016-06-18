@@ -5,8 +5,8 @@ public class Location {
 	private int mY;
 	
 	public Location(Location location) {
-		mX = location.getLocationX();
-		mY = location.getLocationY();
+		mX = location.mX;
+		mY = location.mY;
 	}
 	
 	public Location(int x, int y) {
@@ -15,8 +15,8 @@ public class Location {
 	}
 	
 	public void setLocation(Location location) {
-		mX = location.getLocationX();
-		mY = location.getLocationY();
+		mX = location.mX;
+		mY = location.mY;
 	}
 	
 	public void setLocation(int x, int y) {
