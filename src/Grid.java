@@ -55,7 +55,8 @@ public class Grid {
 	public boolean isAtDestinations() {
 		for (Location location: mLocations) {
 			for (Location destination: mDestinations) {
-				if (location == destination) {
+				if (location.getLocationX() == destination.getLocationX()
+						&& location.getLocationY() == destination.getLocationY()) {
 					return true;
 				}
 			}

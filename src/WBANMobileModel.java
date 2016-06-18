@@ -18,6 +18,7 @@ public class WBANMobileModel {
 
 	public static void main(String[] args) {
 		WBANMobileModel wbanMobileModel = new WBANMobileModel();
+		System.out.println("start");
 		wbanMobileModel.init();
 		for (int i = 0; i < SIMULATION_NUMBERS; i++) {
 			wbanMobileModel.step();
@@ -50,12 +51,17 @@ public class WBANMobileModel {
 	}
 	
 	private void initItems() {
-		Arrays.fill(mLocations, new Location(0, 0));
-		Arrays.fill(mItems, new Item(new Location(0, 0), STEP_LENGTH, new RandomMobileModel()));
+		mLocations = new Location[ITEM_NUMBERS];
+		mItems = new Item[ITEM_NUMBERS];
+		for (int i = 0; i < ITEM_NUMBERS; i++) {
+			mLocations[i] = new Location(0, 0);
+			mItems[i] = new Item(new Location(0, 0), STEP_LENGTH, new RandomMobileModel());
+		}
 		for (int i = 0; i < ITEM_NUMBERS; i++) {
 			do {
 				int x = new Random().nextInt(GRID_ROWS);
 				int y = new Random().nextInt(GRID_COLUMNS);
+				System.out.println("1: " + mLocations[99].getLocationX());
 				mLocations[i].setLocation(x, y);
 				mItems[i].setLocation(mLocations[i]);
 			} while (isOverlay(i));
