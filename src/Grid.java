@@ -64,6 +64,17 @@ public class Grid {
 		return false;
 	}
 	
+	public boolean isAtOccupations() {
+		for (Location location: mLocations) {
+			for (Location occupation: mOccupations) {
+				if (location.getLocationX() == occupation.getLocationX()
+						&& location.getLocationY() == occupation.getLocationY()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	public boolean isBeyondBoundary(Location location) {
 		int x = location.getLocationX();
 		int y = location.getLocationY();

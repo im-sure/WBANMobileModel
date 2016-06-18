@@ -7,7 +7,7 @@ public class WBANMobileModel {
 	public static final int GRID_COLUMNS = 10000;
 	public static final int ITEM_NUMBERS = 100;
 	public static final int STEP_LENGTH = 1;
-	public static final int SIMULATION_NUMBERS = 10000;
+	public static final int SIMULATION_NUMBERS = 100000;
 	
 	private Grid mGrid;
 	private Location[] mOccupations;
@@ -18,14 +18,12 @@ public class WBANMobileModel {
 
 	public static void main(String[] args) {
 		WBANMobileModel wbanMobileModel = new WBANMobileModel();
-		System.out.println("start");
 		wbanMobileModel.init();
 		for (int i = 0; i < SIMULATION_NUMBERS; i++) {
 			wbanMobileModel.step();
-			System.out.println("Number " + i
-					+ ": score is " + wbanMobileModel.mScores
-					+ ", probability is " + wbanMobileModel.calculateProbability());
 		}
+		System.out.println("Score is " + wbanMobileModel.mScores
+				+ ", probability is " + wbanMobileModel.calculateProbability());
 	}
 	
 	private void init() {
@@ -61,7 +59,6 @@ public class WBANMobileModel {
 			do {
 				int x = new Random().nextInt(GRID_ROWS);
 				int y = new Random().nextInt(GRID_COLUMNS);
-				System.out.println("1: " + mLocations[99].getLocationX());
 				mLocations[i].setLocation(x, y);
 				mItems[i].setLocation(mLocations[i]);
 			} while (isOverlay(i));
@@ -71,7 +68,7 @@ public class WBANMobileModel {
 	private void step() {
 		for (int i = 0; i < ITEM_NUMBERS; i++) {
 			mItems[i].step();
-			if (isOverlay(i) || mGrid.isBeyondBoundary(mItems[i].getLocation())) {
+			if (isOverlay(i) || mGrid.isBeyondBoundary(mItems[i].getLocation()) || mGrid.isAtOccupations()) {
 				mItems[i].back();
 			}
 			mLocations[i].setLocation(mItems[i].getLocation());
